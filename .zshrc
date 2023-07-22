@@ -1,11 +1,3 @@
-# Proxy
-export hostip=$(cat /etc/resolv.conf |grep -oP '(?<=nameserver\ ).*')
-alias set_proxy='export all_proxy="socks5://${hostip}:1080";'
-alias unset_proxy='unset all_proxy'
-set_proxy
-
-alias vi=nvim
-
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -24,6 +16,20 @@ export ZSH="$HOME/.oh-my-zsh"
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="powerlevel10k/powerlevel10k"
+
+# nvim
+alias vi=~/apps/nvim-macos/bin/nvim
+
+# miniconda
+# export PATH="$HOME/apps/miniconda3/bin:$PATH"  # commented out by conda initialize
+
+# proxy
+alias proxy_on='export http_proxy=http://127.0.0.1:7890;export https_proxy=https://127.0.0.1:7890'
+alias proxy_off='unset http_proxy;unset https_proxy'
+proxy_on
+
+# flutter path
+export PATH="$PATH:~/apps/flutter/bin"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -85,9 +91,12 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git copyfile copybuffer vi-mode dirhistory jsontools
+         zsh-syntax-highlighting zsh-autosuggestions z k)
 
 source $ZSH/oh-my-zsh.sh
+
+bindkey '`' autosuggest-accept
 
 # User configuration
 
@@ -117,3 +126,28 @@ source $ZSH/oh-my-zsh.sh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/acker/apps/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/acker/apps/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/acker/apps/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/acker/apps/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+
+# >>> rbenv initialize >>>
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+# <<< rbenv initialize <<<
+
+
+# Load Angular CLI autocompletion.
+source <(ng completion script)
