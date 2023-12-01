@@ -8,6 +8,14 @@ fi
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
+# Alias for nvim
+alias vi=~/apps/nvim-macos/bin/nvim
+
+# Proxy
+alias proxy_on='export http_proxy=http://127.0.0.1:7890;export https_proxy=https://127.0.0.1:7890'
+alias proxy_off='unset http_proxy;unset https_proxy'
+proxy_on
+
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -16,20 +24,6 @@ export ZSH="$HOME/.oh-my-zsh"
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="powerlevel10k/powerlevel10k"
-
-# nvim
-alias vi=~/apps/nvim-macos/bin/nvim
-
-# miniconda
-# export PATH="$HOME/apps/miniconda3/bin:$PATH"  # commented out by conda initialize
-
-# proxy
-alias proxy_on='export http_proxy=http://127.0.0.1:7890;export https_proxy=https://127.0.0.1:7890'
-alias proxy_off='unset http_proxy;unset https_proxy'
-proxy_on
-
-# flutter path
-export PATH="$PATH:~/apps/flutter/bin"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -91,12 +85,10 @@ export PATH="$PATH:~/apps/flutter/bin"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git copyfile copybuffer vi-mode dirhistory jsontools
-         zsh-syntax-highlighting zsh-autosuggestions z k)
+plugins=(git  z zsh-syntax-highlighting thefuck
+  copyfile dirhistory vi-mode)
 
 source $ZSH/oh-my-zsh.sh
-
-bindkey '`' autosuggest-accept
 
 # User configuration
 
@@ -129,25 +121,37 @@ bindkey '`' autosuggest-accept
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/acker/apps/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/Users/gaoshanxun/apps/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/Users/acker/apps/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/acker/apps/miniconda3/etc/profile.d/conda.sh"
+    if [ -f "/Users/gaoshanxun/apps/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/gaoshanxun/apps/miniconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/Users/acker/apps/miniconda3/bin:$PATH"
+        export PATH="/Users/gaoshanxun/apps/miniconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-
 
 # >>> rbenv initialize >>>
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 # <<< rbenv initialize <<<
 
+# the fuck
+eval $(thefuck --alias)
+
+# prettier config file
+PRETTIERD_DEFAULT_CONFIG=~/.config/prettier/config.json
+
+# export npm bin file
+export PATH=/opt/homebrew/Cellar/node/20.5.0/bin:$PATH
+
+
 
 # Load Angular CLI autocompletion.
 source <(ng completion script)
+
+# Ruby on Rails
+export DISABLE_SPRING=true
